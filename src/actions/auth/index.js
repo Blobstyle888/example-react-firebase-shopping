@@ -28,7 +28,7 @@ export const login = (email, password) => async dispatch => {
       payload: currentUser
     })
 
-    localStorage.setItem('currenetUser', currentUser)
+    localStorage.setItem('currenetUser', JSON.stringify(currentUser))
 
     dispatch(push('/'))
   } catch (error) {
@@ -54,7 +54,7 @@ export const register = (email, password) => async dispatch => {
       payload: currentUser
     })
 
-    localStorage.setItem('currenetUser', currentUser)
+    localStorage.setItem('currenetUser', JSON.stringify(currentUser))
     dispatch(push('/'))
   } catch (error) {
     dispatch({
@@ -75,6 +75,7 @@ export const logout = () => async dispatch => {
     dispatch({
       type: USER_LOGOUT.SUCCESS
     })
+    localStorage.removeItem('currenetUser')
   } catch (error) {
     dispatch({
       type: USER_LOGOUT.FAILED,
@@ -94,7 +95,7 @@ export const fetchCurrentUser = () => async dispatch => {
         type: FETCH_CURRENT_USER.SUCCESS,
         payload: user
       })
-      localStorage.setItem('currenetUser', user)
+      localStorage.setItem('currenetUser', JSON.stringify(user))
     } else {
       dispatch({
         type: FETCH_CURRENT_USER.FAILED
