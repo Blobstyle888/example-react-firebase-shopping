@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// import './App.css'
+
+import AppHeader from './components/AppHeader'
+import AuthRoute from './views/auth/AuthRoute'
+import HomeRoute from './views/home/HomeRoute'
+import ProductRoute from './views/products/ProductRote'
+
+import { fetchCurrentUser } from './actions/auth'
+
+export class App extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props
+
+    dispatch(fetchCurrentUser())
+    console.log('fetchCurrentUser > ', dispatch(fetchCurrentUser()))
+  }
+  render() {
+    return (
+      <div className="App">
+        <AppHeader />
+        <AuthRoute />
+        <HomeRoute />
+        <ProductRoute />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default connect()(App)
