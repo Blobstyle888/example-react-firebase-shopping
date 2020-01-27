@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router'
 import firebase from '../../firebase'
 import { createActionSet } from '../../helpers'
 
@@ -5,6 +6,7 @@ const productRef = firebase.db.collection('products')
 
 export const FETCH_PRODUCTS = createActionSet('FETCH_PRODUCTS')
 export const FETCH_PRODUCTS_DETAIL = createActionSet('FETCH_PRODUCTS_DETAIL')
+export const CREATE_PRODUCT = createActionSet('CREATE_PRODUCT')
 
 export const findById = id => async dispatch => {
   dispatch({
@@ -45,6 +47,26 @@ export const findAll = () => async dispatch => {
   } catch (error) {
     dispatch({
       type: FETCH_PRODUCTS.FAILED,
+      error
+    })
+  }
+}
+
+export const createProduct = data => async dispatch => {
+  dispatch({
+    type: CREATE_PRODUCT.PENDING
+  })
+
+  try {
+    const response = await productRef.add(data)
+    dispatch({
+      type: CREATE_PRODUCT.SUCCESS,
+      payload: response
+    })
+    dispatch(push('/products'))
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT.FAILED,
       error
     })
   }
