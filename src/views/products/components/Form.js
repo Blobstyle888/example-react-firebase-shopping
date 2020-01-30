@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 
 import { reduxForm, Field } from 'redux-form'
 
+import DropzoneUploader from '../../../components/DropzoneUploader'
+
 class Form extends Component {
   constructor(props) {
     super(props)
@@ -34,6 +36,15 @@ class Form extends Component {
 
             <div className="field">
               <label className="label">Image: </label>
+              <Field
+                name="coverImage"
+                component={DropzoneUploader}
+                onChange={() => {}}
+                handleProgress={progress => {
+                  console.log('progress >> ', progress)
+                }}
+              />
+
               {imageUrl ? (
                 <img
                   src={imageUrl}
